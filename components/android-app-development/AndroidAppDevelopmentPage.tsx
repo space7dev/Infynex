@@ -729,7 +729,9 @@ export default function AndroidAppDevelopmentPage() {
     const onSelect = () => setPortfolioIndex(portfolioApi.selectedScrollSnap())
     portfolioApi.on('select', onSelect)
     onSelect()
-    return () => portfolioApi.off('select', onSelect)
+    return () => {
+      portfolioApi.off('select', onSelect)
+    }
   }, [portfolioApi])
 
   useEffect(() => {
@@ -737,7 +739,9 @@ export default function AndroidAppDevelopmentPage() {
     const onSelect = () => setDeveloperIndex(developerApi.selectedScrollSnap())
     developerApi.on('select', onSelect)
     onSelect()
-    return () => developerApi.off('select', onSelect)
+    return () => {
+      developerApi.off('select', onSelect)
+    }
   }, [developerApi])
 
   useEffect(() => {
@@ -745,7 +749,9 @@ export default function AndroidAppDevelopmentPage() {
     const onSelect = () => setTestimonialIndex(testimonialApi.selectedScrollSnap())
     testimonialApi.on('select', onSelect)
     onSelect()
-    return () => testimonialApi.off('select', onSelect)
+    return () => {
+      testimonialApi.off('select', onSelect)
+    }
   }, [testimonialApi])
 
   return (

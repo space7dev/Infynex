@@ -95,7 +95,7 @@ export default function PressPage() {
       />
       <Script
         id="smartlook-legacy"
-        nomodule
+        noModule
         src="https://web-sdk.smartlook.com/es5/init.56c464fb7213027d95cc.js"
         strategy="afterInteractive"
       />

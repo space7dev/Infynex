@@ -12,7 +12,7 @@ const solutions = [
     title: "Application",
     description: "We are a reputable app development business with experience in all aspects of Android & iOS app development.",
     link: "#",
-    image: false,
+    image: '',
     order: "right"
   },
   {
@@ -26,7 +26,7 @@ const solutions = [
     title: "Web",
     description: "At Infynex, we design and develop market-leading web-based products with engaging user experiences that add value for your clients.",
     link: "#",
-    image: false,
+    image: '',
     order: "right"
   },
 ]
