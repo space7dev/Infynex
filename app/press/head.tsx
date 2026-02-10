@@ -6,7 +6,7 @@ body[unresolved] { opacity: 0; display: block; overflow: hidden; position: relat
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <link rel="icon" href="https://www.suffescom.com/assets/img/favicon.png" type="img/x-icon" />
+      <link rel="icon" href="/favicon.png" type="image/png" />
       <link rel="canonical" href="https://www.suffescom.com/press" />
       <link rel="stylesheet" href="https://www.suffescom.com/assets/css/bootstrap.css" media="screen" />
       <link rel="stylesheet" href="https://www.suffescom.com/assets/css/fonts.css" media="screen" />

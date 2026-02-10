@@ -82,6 +82,9 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={inter.variable}>
+      <head>
+        <link rel="icon" href="/favicon.png" type="image/png" />
+      </head>
       <body className="flex min-h-screen flex-col">
         <script
           type="application/ld+json"
