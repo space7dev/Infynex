@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import VideoTestimonials from '@/components/testimonials/VideoTestimonials';
-import TextTestimonials from '@/components/testimonials/TextTestimonials';
+import VideoTestimonials from './components/VideoTestimonials'
+import TextTestimonials from './components/TextTestimonials'
 import Link from 'next/link';
 
 export const metadata: Metadata = {

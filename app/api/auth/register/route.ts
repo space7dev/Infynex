@@ -1,37 +1,27 @@
-import { NextResponse } from 'next/server'
-import { z } from 'zod'
 import bcrypt from 'bcryptjs'
+import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { createAuthToken, setAuthCookie } from '@/lib/auth'
 
 export const runtime = 'nodejs'
 
-const registerSchema = z.object({
-  name: z.coerce.string().trim().min(2),
-  email: z.coerce.string().trim().email(),
-  password: z.coerce.string().min(8),
-})
-
 export async function POST(request: Request) {
-  let payload: unknown
-  try {
-    payload = await request.json()
-  } catch {
-    return NextResponse.json({ detail: 'Invalid request body.' }, { status: 400 })
+  const payload = await request.json().catch(() => null)
+  const name = typeof payload?.name === 'string' ? payload.name : ''
+  const email = typeof payload?.email === 'string' ? payload.email : ''
+  const password = typeof payload?.password === 'string' ? payload.password : ''
+
+  if (!name || !email || !password) {
+    return NextResponse.json({ error: 'All fields are required.' }, { status: 400 })
   }
 
-  const parsed = registerSchema.safeParse(payload)
-  if (!parsed.success) {
-    return NextResponse.json(
-      { detail: 'Invalid form data.', errors: parsed.error.flatten() },
-      { status: 400 }
-    )
+  if (password.length < 8) {
+    return NextResponse.json({ error: 'Password must be at least 8 characters.' }, { status: 400 })
   }
 
-  const { name, email, password } = parsed.data
   const existing = await prisma.user.findUnique({ where: { email } })
   if (existing) {
-    return NextResponse.json({ detail: 'Email already in use.' }, { status: 409 })
+    return NextResponse.json({ error: 'Account already exists.' }, { status: 409 })
   }
 
   const passwordHash = await bcrypt.hash(password, 10)
@@ -50,7 +40,7 @@ export async function POST(request: Request) {
   })
 
   if (!token) {
-    return NextResponse.json({ detail: 'Auth not configured.' }, { status: 500 })
+    return NextResponse.json({ error: 'Unable to create session.' }, { status: 500 })
   }
 
   const response = NextResponse.json({ status: 'ok' })

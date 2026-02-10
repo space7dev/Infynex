@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import Hero from '@/components/Hero'
+import Hero from './components/Hero'
 import { Target, Users, Award, Lightbulb, Heart, TrendingUp } from 'lucide-react'
 
 export const metadata: Metadata = {

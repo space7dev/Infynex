@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
-import Hero from '@/components/Hero'
-import ServiceCard from '@/components/ServiceCard'
-import CaseStudyCard from '@/components/CaseStudyCard'
+import Hero from './components/Hero'
+import ServiceCard from './components/ServiceCard'
+import CaseStudyCard from './components/CaseStudyCard'
 import { Smartphone, Tablet, Watch, Code2, Zap, Shield } from 'lucide-react'
 
 export const metadata: Metadata = {

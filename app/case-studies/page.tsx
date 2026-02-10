@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
-import Hero from '@/components/Hero'
-import CaseStudyCard from '@/components/CaseStudyCard'
+import Hero from './components/Hero'
+import CaseStudyCard from './components/CaseStudyCard'
 
 export const metadata: Metadata = {
   title: 'Case Studies - Success Stories',

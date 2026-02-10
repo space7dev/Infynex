@@ -3,8 +3,8 @@ import { clearAuthCookie } from '@/lib/auth'
 
 export const runtime = 'nodejs'
 
-export async function POST(request: Request) {
-  const response = NextResponse.redirect(new URL('/', request.url))
+export async function POST() {
+  const response = NextResponse.json({ status: 'ok' })
   clearAuthCookie(response)
   return response
 }

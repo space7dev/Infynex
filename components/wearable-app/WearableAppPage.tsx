@@ -2,6 +2,9 @@
 
 import { useState } from 'react'
 import { submitContactForm } from '@/lib/contactApi'
+import { useAccordion } from '@/lib/useAccordion'
+import FaqSectionButtonItems from '@/components/shared/FaqSectionButtonItems'
+import TrustedLogosStrip from '@/components/shared/TrustedLogosStrip'
 
 const normalizeAssetUrl = (url: string) =>
   url.replace('https://www.Infynex.com/', 'https://www.suffescom.com/')
@@ -509,7 +512,7 @@ const faqs = [
 ]
 
 export default function WearableAppPage() {
-  const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const { openIndex: openFaq, toggleIndex: toggleFaq } = useAccordion(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
@@ -611,21 +614,16 @@ export default function WearableAppPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-100 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-8">
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            {trustedLogos.map((logo) => (
-              <img
-                key={logo.alt}
-                src={normalizeAssetUrl(logo.src)}
-                alt={logo.alt}
-                className="h-10 w-auto opacity-80"
-                loading="lazy"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <TrustedLogosStrip
+        logos={trustedLogos.map((logo) => ({
+          ...logo,
+          src: normalizeAssetUrl(logo.src),
+        }))}
+        sectionClassName="border-b border-slate-100 bg-white"
+        containerClassName="mx-auto max-w-6xl px-6 py-8"
+        listClassName="flex flex-wrap items-center justify-center gap-6"
+        imageClassName="h-10 w-auto opacity-80"
+      />
 
       <section className="bg-slate-50">
         <div className="mx-auto max-w-6xl px-6 py-14">
@@ -945,34 +943,23 @@ export default function WearableAppPage() {
         </div>
       </section>
 
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-6xl px-6 py-14">
-          <div className="max-w-3xl">
-            <h2 className="text-2xl font-semibold md:text-4xl">FAQs</h2>
-          </div>
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
-            {faqs.map((faq, index) => (
-              <button
-                key={faq.question}
-                onClick={() => setOpenFaq((prev) => (prev === index ? null : index))}
-                className="rounded-2xl border border-slate-100 bg-white p-5 text-left"
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <h3 className="text-sm font-semibold text-slate-800">
-                    {faq.question}
-                  </h3>
-                  <span className="text-lg text-emerald-500">
-                    {openFaq === index ? '-' : '+'}
-                  </span>
-                </div>
-                {openFaq === index ? (
-                  <p className="mt-3 text-sm text-slate-600">{faq.answer}</p>
-                ) : null}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSectionButtonItems
+        items={faqs}
+        openIndex={openFaq}
+        onToggle={toggleFaq}
+        sectionClassName="bg-slate-50"
+        containerClassName="mx-auto max-w-6xl px-6 py-14"
+        headerWrapperClassName="max-w-3xl"
+        title="FAQs"
+        titleTag="h2"
+        titleClassName="text-2xl font-semibold md:text-4xl"
+        listClassName="mt-8 grid gap-6 md:grid-cols-2"
+        itemButtonClassName="rounded-2xl border border-slate-100 bg-white p-5 text-left"
+        headerClassName="flex items-center justify-between gap-4"
+        questionClassName="text-sm font-semibold text-slate-800"
+        iconClassName="text-lg text-emerald-500"
+        answerClassName="mt-3 text-sm text-slate-600"
+      />
     </div>
   )
 }

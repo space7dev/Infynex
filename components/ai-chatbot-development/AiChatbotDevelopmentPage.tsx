@@ -3,6 +3,9 @@
 import { useMemo, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
+import { useAccordion } from '@/lib/useAccordion'
+import FaqSectionButtonItems from '@/components/shared/FaqSectionButtonItems'
+import TrustedLogosStrip from '@/components/shared/TrustedLogosStrip'
 
 const normalizeAssetUrl = (url: string) =>
   url.replace('https://www.Infynex.com/', 'https://www.suffescom.com/')
@@ -934,7 +937,7 @@ export default function AiChatbotDevelopmentPage() {
   const [portfolioRef] = useEmblaCarousel({ loop: true }, [autoplay])
   const [testimonialRef] = useEmblaCarousel({ loop: true }, [autoplay])
   const [activeStack, setActiveStack] = useState(techStackTabs[0].id)
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0)
+  const { openIndex: openFaqIndex, toggleIndex: toggleFaqIndex } = useAccordion(0)
 
   const activeStackContent = techStackTabs.find((tab) => tab.id === activeStack)
 
@@ -987,21 +990,16 @@ export default function AiChatbotDevelopmentPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-100 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-10">
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            {trustedLogos.map((logo) => (
-              <img
-                key={logo.alt}
-                src={normalizeAssetUrl(logo.src)}
-                alt={logo.alt}
-                className="h-10 w-auto opacity-80"
-                loading="lazy"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <TrustedLogosStrip
+        logos={trustedLogos.map((logo) => ({
+          ...logo,
+          src: normalizeAssetUrl(logo.src),
+        }))}
+        sectionClassName="border-b border-slate-100 bg-white"
+        containerClassName="mx-auto max-w-6xl px-6 py-10"
+        listClassName="flex flex-wrap items-center justify-center gap-6"
+        imageClassName="h-10 w-auto opacity-80"
+      />
 
       <section className="bg-slate-50">
         <div className="mx-auto max-w-6xl px-6 py-14">
@@ -1655,41 +1653,25 @@ export default function AiChatbotDevelopmentPage() {
         </div>
       </section>
 
-      <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-14">
-          <div className="max-w-3xl">
-            <h2 className="text-2xl font-semibold md:text-4xl">
-              FAQs Related To AI Chatbot Development Services
-            </h2>
-            <p className="mt-4 text-slate-600">
-              Answers to the most common questions about AI chatbot development.
-            </p>
-          </div>
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {faqs.map((faq, index) => (
-              <button
-                key={faq.question}
-                onClick={() =>
-                  setOpenFaqIndex((prev) => (prev === index ? null : index))
-                }
-                className="rounded-2xl border border-slate-100 p-5 text-left"
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <h3 className="text-sm font-semibold text-slate-800">
-                    {faq.question}
-                  </h3>
-                  <span className="text-lg text-emerald-500">
-                    {openFaqIndex === index ? '-' : '+'}
-                  </span>
-                </div>
-                {openFaqIndex === index ? (
-                  <p className="mt-3 text-sm text-slate-600">{faq.answer}</p>
-                ) : null}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSectionButtonItems
+        items={faqs}
+        openIndex={openFaqIndex}
+        onToggle={toggleFaqIndex}
+        sectionClassName="bg-white"
+        containerClassName="mx-auto max-w-6xl px-6 py-14"
+        headerWrapperClassName="max-w-3xl"
+        title="FAQs Related To AI Chatbot Development Services"
+        titleTag="h2"
+        titleClassName="text-2xl font-semibold md:text-4xl"
+        subtitle="Answers to the most common questions about AI chatbot development."
+        subtitleClassName="mt-4 text-slate-600"
+        listClassName="mt-10 grid gap-6 md:grid-cols-2"
+        itemButtonClassName="rounded-2xl border border-slate-100 p-5 text-left"
+        headerClassName="flex items-center justify-between gap-4"
+        questionClassName="text-sm font-semibold text-slate-800"
+        iconClassName="text-lg text-emerald-500"
+        answerClassName="mt-3 text-sm text-slate-600"
+      />
     </div>
   )
 }

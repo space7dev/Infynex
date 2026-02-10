@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import PortfolioBanner from '@/components/PortfolioBanner';
-import PortfolioTabs from '@/components/PortfolioTabs';
-import PortfolioGrid from '@/components/PortfolioGrid';
+import PortfolioBanner from './components/PortfolioBanner'
+import PortfolioTabs from './components/PortfolioTabs'
+import PortfolioGrid from './components/PortfolioGrid'
 import { getPortfolioByCategory } from '@/lib/portfolioData';
-import Footer from '@/components/Footer';
+import Footer from './components/Footer'
 
 export default function PortfolioPage() {
   const [activeTab, setActiveTab] = useState<string>('all');

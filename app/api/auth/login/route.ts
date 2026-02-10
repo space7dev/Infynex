@@ -1,41 +1,27 @@
-import { NextResponse } from 'next/server'
-import { z } from 'zod'
 import bcrypt from 'bcryptjs'
+import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { createAuthToken, setAuthCookie } from '@/lib/auth'
 
 export const runtime = 'nodejs'
 
-const loginSchema = z.object({
-  email: z.coerce.string().trim().email(),
-  password: z.coerce.string().min(8),
-})
-
 export async function POST(request: Request) {
-  let payload: unknown
-  try {
-    payload = await request.json()
-  } catch {
-    return NextResponse.json({ detail: 'Invalid request body.' }, { status: 400 })
+  const payload = await request.json().catch(() => null)
+  const email = typeof payload?.email === 'string' ? payload.email : ''
+  const password = typeof payload?.password === 'string' ? payload.password : ''
+
+  if (!email || !password) {
+    return NextResponse.json({ error: 'Email and password are required.' }, { status: 400 })
   }
 
-  const parsed = loginSchema.safeParse(payload)
-  if (!parsed.success) {
-    return NextResponse.json(
-      { detail: 'Invalid form data.', errors: parsed.error.flatten() },
-      { status: 400 }
-    )
-  }
-
-  const { email, password } = parsed.data
   const user = await prisma.user.findUnique({ where: { email } })
   if (!user) {
-    return NextResponse.json({ detail: 'Invalid credentials.' }, { status: 401 })
+    return NextResponse.json({ error: 'Invalid credentials.' }, { status: 401 })
   }
 
-  const matches = await bcrypt.compare(password, user.passwordHash)
-  if (!matches) {
-    return NextResponse.json({ detail: 'Invalid credentials.' }, { status: 401 })
+  const isValid = await bcrypt.compare(password, user.passwordHash)
+  if (!isValid) {
+    return NextResponse.json({ error: 'Invalid credentials.' }, { status: 401 })
   }
 
   const token = createAuthToken({
@@ -45,7 +31,7 @@ export async function POST(request: Request) {
   })
 
   if (!token) {
-    return NextResponse.json({ detail: 'Auth not configured.' }, { status: 500 })
+    return NextResponse.json({ error: 'Unable to create session.' }, { status: 500 })
   }
 
   const response = NextResponse.json({ status: 'ok' })

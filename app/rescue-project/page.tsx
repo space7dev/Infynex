@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
-import Hero from '@/components/Hero'
-import ContactForm from '@/components/ContactForm'
+import Hero from './components/Hero'
+import ContactForm from './components/ContactForm'
 import { AlertTriangle, CheckCircle, Clock, Shield } from 'lucide-react'
 
 export const metadata: Metadata = {

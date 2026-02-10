@@ -1,73 +1,49 @@
-import { NextResponse } from 'next/server'
-import { z } from 'zod'
-import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
+import bcrypt from 'bcryptjs'
+import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { createAuthToken, setAuthCookie } from '@/lib/auth'
 
 export const runtime = 'nodejs'
 
-const resetSchema = z.object({
-  token: z.coerce.string().min(10),
-  password: z.coerce.string().min(8),
-})
+const sha256 = (value: string) =>
+  crypto.createHash('sha256').update(value).digest('hex')
 
 export async function POST(request: Request) {
-  let payload: unknown
-  try {
-    payload = await request.json()
-  } catch {
-    return NextResponse.json({ detail: 'Invalid request body.' }, { status: 400 })
+  const payload = await request.json().catch(() => null)
+  const token = typeof payload?.token === 'string' ? payload.token : ''
+  const password = typeof payload?.password === 'string' ? payload.password : ''
+
+  if (!token || !password) {
+    return NextResponse.json({ error: 'Token and password are required.' }, { status: 400 })
   }
 
-  const parsed = resetSchema.safeParse(payload)
-  if (!parsed.success) {
-    return NextResponse.json(
-      { detail: 'Invalid form data.', errors: parsed.error.flatten() },
-      { status: 400 }
-    )
+  if (password.length < 8) {
+    return NextResponse.json({ error: 'Password must be at least 8 characters.' }, { status: 400 })
   }
 
-  const { token, password } = parsed.data
-  const tokenHash = crypto.createHash('sha256').update(token).digest('hex')
-
-  const record = await prisma.passwordResetToken.findFirst({
+  const tokenHash = sha256(token)
+  const resetToken = await prisma.passwordResetToken.findFirst({
     where: {
       tokenHash,
       usedAt: null,
       expiresAt: { gt: new Date() },
     },
-    include: { user: true },
   })
 
-  if (!record) {
-    return NextResponse.json({ detail: 'Invalid or expired token.' }, { status: 400 })
+  if (!resetToken) {
+    return NextResponse.json({ error: 'Invalid or expired token.' }, { status: 400 })
   }
 
   const passwordHash = await bcrypt.hash(password, 10)
-
-  await prisma.$transaction([
-    prisma.user.update({
-      where: { id: record.userId },
-      data: { passwordHash },
-    }),
-    prisma.passwordResetToken.update({
-      where: { id: record.id },
-      data: { usedAt: new Date() },
-    }),
-  ])
-
-  const authToken = createAuthToken({
-    userId: record.user.id,
-    email: record.user.email,
-    name: record.user.name,
+  await prisma.user.update({
+    where: { id: resetToken.userId },
+    data: { passwordHash },
   })
 
-  if (!authToken) {
-    return NextResponse.json({ detail: 'Auth not configured.' }, { status: 500 })
-  }
+  await prisma.passwordResetToken.update({
+    where: { id: resetToken.id },
+    data: { usedAt: new Date() },
+  })
 
-  const response = NextResponse.json({ status: 'ok' })
-  setAuthCookie(response, authToken)
-  return response
+  return NextResponse.json({ status: 'ok' })
 }

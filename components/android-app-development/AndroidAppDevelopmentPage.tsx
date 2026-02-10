@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
+import { useAccordion } from '@/lib/useAccordion'
+import FaqSectionCardItems from '@/components/shared/FaqSectionCardItems'
 
 const normalizeAssetUrl = (url: string) => url.replace(/Infynex/g, 'suffescom')
 
@@ -702,7 +704,7 @@ export default function AndroidAppDevelopmentPage() {
   const [testimonialIndex, setTestimonialIndex] = useState(0)
 
   const [activeTab, setActiveTab] = useState(techStackTabs[0].id)
-  const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const { openIndex: openFaq, toggleIndex: toggleFaq } = useAccordion(0)
 
   const activeTabItems = useMemo(
     () => techStackTabs.find((tab) => tab.id === activeTab)?.items ?? [],
@@ -1281,31 +1283,23 @@ export default function AndroidAppDevelopmentPage() {
         </div>
       </section>
 
-      <section className="bg-slate-50 py-16">
-        <div className="container mx-auto px-4">
-          <h3 className="text-3xl md:text-4xl font-bold">
-            What People Ask About Android App Development
-          </h3>
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {faqs.map((faq, index) => {
-              const isOpen = openFaq === index
-              return (
-                <div key={faq.question} className="rounded-2xl border border-gray-200 bg-white p-6">
-                  <button
-                    type="button"
-                    className="flex w-full items-start justify-between text-left"
-                    onClick={() => setOpenFaq(isOpen ? null : index)}
-                  >
-                    <span className="text-base font-semibold text-gray-900">{faq.question}</span>
-                    <span className="ml-4 text-emerald-600">{isOpen ? '-' : '+'}</span>
-                  </button>
-                  {isOpen && <p className="mt-3 text-sm text-gray-600">{faq.answer}</p>}
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
+      <FaqSectionCardItems
+        items={faqs}
+        openIndex={openFaq}
+        onToggle={toggleFaq}
+        sectionClassName="bg-slate-50 py-16"
+        containerClassName="container mx-auto px-4"
+        title="What People Ask About Android App Development"
+        titleTag="h3"
+        titleClassName="text-3xl md:text-4xl font-bold"
+        listClassName="mt-8 grid gap-4 md:grid-cols-2"
+        itemClassName="rounded-2xl border border-gray-200 bg-white p-6"
+        buttonClassName="flex w-full items-start justify-between text-left"
+        questionClassName="text-base font-semibold text-gray-900"
+        iconClassName="ml-4 text-emerald-600"
+        answerClassName="mt-3 text-sm text-gray-600"
+        buttonType="button"
+      />
     </div>
   )
 }

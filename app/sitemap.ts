@@ -10,7 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/blockchain',
     '/ai',
     '/products',
-    '/hire-developers',
     '/portfolio',
     '/testimonials',
     '/about',

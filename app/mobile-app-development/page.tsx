@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk, Manrope } from 'next/font/google'
-import IndustryVideoTabs from '@/components/mobile-app-development/IndustryVideoTabs'
-import TechStackTabs from '@/components/mobile-app-development/TechStackTabs'
-import GeoTabs from '@/components/mobile-app-development/GeoTabs'
-import MobileAppHeroContactForm from '@/components/forms/MobileAppHeroContactForm'
-import TestimonialsCarousel from '@/components/mobile-app-development/TestimonialsCarousel'
+import IndustryVideoTabs from './components/IndustryVideoTabs'
+import TechStackTabs from './components/TechStackTabs'
+import GeoTabs from './components/GeoTabs'
+import MobileAppHeroContactForm from './components/MobileAppHeroContactForm'
+import TestimonialsCarousel from './components/TestimonialsCarousel'
 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' })
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' })

@@ -3,6 +3,9 @@
 import { useMemo, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
+import { useAccordion } from '@/lib/useAccordion'
+import FaqSectionCardItems from '@/components/shared/FaqSectionCardItems'
+import TrustedLogosStrip from '@/components/shared/TrustedLogosStrip'
 
 const ASSET_BASE = 'https://www.suffescom.com'
 const normalizeAssetUrl = (url: string) =>
@@ -1523,7 +1526,7 @@ export default function AiAgentDevelopmentPage() {
   const [industryTab, setIndustryTab] = useState(industries[0].id)
   const [complianceTab, setComplianceTab] = useState(complianceTabs[0].id)
   const [techTab, setTechTab] = useState(techStackTabs[0].id)
-  const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const { openIndex: openFaq, toggleIndex: toggleFaq } = useAccordion(0)
 
   const [portfolioRef] = useEmblaCarousel(
     { loop: true },
@@ -1601,19 +1604,16 @@ export default function AiAgentDevelopmentPage() {
         </div>
       </section>
 
-      <section className="bg-white">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-6 px-4 py-8">
-          {trustedLogos.map((logo) => (
-            <img
-              key={logo.alt}
-              src={normalizeAssetUrl(logo.src)}
-              alt={logo.alt}
-              className="h-10 object-contain"
-              loading="lazy"
-            />
-          ))}
-        </div>
-      </section>
+      <TrustedLogosStrip
+        logos={trustedLogos.map((logo) => ({
+          ...logo,
+          src: normalizeAssetUrl(logo.src),
+        }))}
+        sectionClassName="bg-white"
+        containerClassName="mx-auto max-w-6xl px-4 py-8"
+        listClassName="flex flex-wrap items-center justify-center gap-6"
+        imageClassName="h-10 object-contain"
+      />
 
       <section className="bg-slate-50">
         <div className="mx-auto max-w-6xl px-4 py-16">
@@ -2511,40 +2511,21 @@ export default function AiAgentDevelopmentPage() {
         </div>
       </section>
 
-      <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          {sectionHeading('Frequently Asked Questions')}
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {faqs.map((item, index) => {
-              const isOpen = openFaq === index
-              return (
-                <div
-                  key={item.question}
-                  className="rounded-2xl border border-slate-200 bg-slate-50 p-5"
-                >
-                  <button
-                    type="button"
-                    className="flex w-full items-center justify-between text-left"
-                    onClick={() =>
-                      setOpenFaq((prev) => (prev === index ? null : index))
-                    }
-                  >
-                    <span className="text-sm font-semibold text-slate-900">
-                      {item.question}
-                    </span>
-                    <span className="ml-4 text-xl text-sky-500">
-                      {isOpen ? '-' : '+'}
-                    </span>
-                  </button>
-                  {isOpen ? (
-                    <p className="mt-3 text-sm text-slate-600">{item.answer}</p>
-                  ) : null}
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
+      <FaqSectionCardItems
+        items={faqs}
+        openIndex={openFaq}
+        onToggle={toggleFaq}
+        sectionClassName="bg-white"
+        containerClassName="mx-auto max-w-6xl px-4 py-16"
+        header={sectionHeading('Frequently Asked Questions')}
+        listClassName="mt-8 grid gap-4 md:grid-cols-2"
+        itemClassName="rounded-2xl border border-slate-200 bg-slate-50 p-5"
+        buttonClassName="flex w-full items-center justify-between text-left"
+        questionClassName="text-sm font-semibold text-slate-900"
+        iconClassName="ml-4 text-xl text-sky-500"
+        answerClassName="mt-3 text-sm text-slate-600"
+        buttonType="button"
+      />
     </main>
   )
 }

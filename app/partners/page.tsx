@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import PartnersHero from '@/components/PartnersHero';
-import PartnersLogoWall from '@/components/PartnersLogoWall';
-import SalesPartners from '@/components/SalesPartners';
-import BecomePartner from '@/components/BecomePartner';
-import PartnersModalForm from '@/components/forms/PartnersModalForm';
+import PartnersHero from './components/PartnersHero'
+import PartnersLogoWall from './components/PartnersLogoWall'
+import SalesPartners from './components/SalesPartners'
+import BecomePartner from './components/BecomePartner'
+import PartnersModalForm from './components/PartnersModalForm'
 import './partners.css';
 
 export default function PartnersPage() {

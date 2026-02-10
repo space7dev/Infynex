@@ -1,10 +1,10 @@
 import React from 'react';
-import AwardsHero from '@/components/AwardsHero';
-import AwardsFeatured from '@/components/AwardsFeatured';
-import AwardsGridSection from '@/components/AwardsGridSection';
-import AwardsCta from '@/components/AwardsCta';
-import AwardsHighlight from '@/components/AwardsHighlight';
-import Footer from '@/components/Footer';
+import AwardsHero from './components/AwardsHero'
+import AwardsFeatured from './components/AwardsFeatured'
+import AwardsGridSection from './components/AwardsGridSection'
+import AwardsCta from './components/AwardsCta'
+import AwardsHighlight from './components/AwardsHighlight'
+import Footer from './components/Footer'
 import {
   blockchainAwards,
   mobileAwards,

@@ -5,71 +5,87 @@ import Link from 'next/link'
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
+  const [status, setStatus] = useState('')
   const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setError('')
-    setMessage('')
-    setLoading(true)
+    setStatus('')
+    setIsSubmitting(true)
 
-    const response = await fetch('/api/auth/forgot-password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email }),
-    })
+    try {
+      const response = await fetch('/api/auth/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
 
-    setLoading(false)
+      if (!response.ok) {
+        const payload = await response.json().catch(() => null)
+        throw new Error(payload?.error || 'Unable to process request.')
+      }
 
-    if (response.ok) {
-      setMessage('If the email exists, a reset link has been sent.')
-      return
+      setStatus('Check your inbox for the reset link.')
+      setEmail('')
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unable to process request.'
+      setError(message)
+    } finally {
+      setIsSubmitting(false)
     }
-
-    const data = await response.json().catch(() => ({}))
-    setError(data.detail || 'Unable to send reset email.')
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 px-6 py-12 text-slate-900">
+    <main className="min-h-screen bg-slate-50 px-6 py-12 text-slate-900">
       <div className="mx-auto w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-        <h1 className="text-2xl font-semibold">Forgot password</h1>
+        <h1 className="text-2xl font-semibold">Reset password</h1>
         <p className="mt-2 text-sm text-slate-600">
-          Enter your email to receive a reset link.
+          Send yourself a secure link to reset the admin password.
         </p>
 
-        <form onSubmit={onSubmit} className="mt-6 space-y-4">
-          <div>
-            <label className="text-sm font-medium text-slate-700">Email</label>
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+          <label className="block text-sm font-medium text-slate-700">
+            Email
             <input
+              className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-400"
+              autoComplete="email"
+              name="email"
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@company.com"
+              required
               type="email"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm"
-              required
             />
-          </div>
+          </label>
 
-          {error ? <p className="text-sm text-red-600">{error}</p> : null}
-          {message ? <p className="text-sm text-green-600">{message}</p> : null}
+          {status && (
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+              {status}
+            </div>
+          )}
+          {error && (
+            <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+              {error}
+            </div>
+          )}
 
           <button
+            className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={isSubmitting}
             type="submit"
-            className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white"
-            disabled={loading}
           >
-            {loading ? 'Sending link...' : 'Send reset link'}
+            {isSubmitting ? 'Sending...' : 'Send reset link'}
           </button>
         </form>
 
-        <div className="mt-6 text-sm text-slate-600">
-          <Link href="/auth/login" className="text-blue-600">
+        <div className="mt-6 text-center text-sm text-slate-600">
+          <Link className="hover:text-slate-900" href="/auth/login">
             Back to sign in
           </Link>
         </div>
       </div>
-    </div>
+    </main>
   )
 }

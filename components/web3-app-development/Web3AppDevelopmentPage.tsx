@@ -1,6 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { useAccordion } from '@/lib/useAccordion'
+import FaqSectionCardItems from '@/components/shared/FaqSectionCardItems'
+import TrustedLogosCardGrid from '@/components/shared/TrustedLogosCardGrid'
 
 const normalizeAssetUrl = (url: string) =>
   url.replace('https://www.Infynex.com/', 'https://www.suffescom.com/')
@@ -451,7 +454,7 @@ const faqs = [
 
 export default function Web3AppDevelopmentPage() {
   const [activeTab, setActiveTab] = useState(techTabs[0].id)
-  const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const { openIndex: openFaq, toggleIndex: toggleFaq } = useAccordion(0)
 
   const activeTabData = techTabs.find((tab) => tab.id === activeTab)
 
@@ -487,24 +490,17 @@ export default function Web3AppDevelopmentPage() {
         </div>
       </section>
 
-      <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-10">
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            {trustedLogos.map((logo) => (
-              <div
-                key={logo.alt}
-                className="flex h-16 w-32 items-center justify-center rounded-2xl bg-slate-50 p-3 shadow-sm"
-              >
-                <img
-                  src={normalizeAssetUrl(logo.src)}
-                  alt={logo.alt}
-                  className="h-8"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TrustedLogosCardGrid
+        logos={trustedLogos.map((logo) => ({
+          ...logo,
+          src: normalizeAssetUrl(logo.src),
+        }))}
+        sectionClassName="bg-white"
+        containerClassName="mx-auto max-w-6xl px-6 py-10"
+        listClassName="flex flex-wrap items-center justify-center gap-6"
+        cardClassName="flex h-16 w-32 items-center justify-center rounded-2xl bg-slate-50 p-3 shadow-sm"
+        imageClassName="h-8"
+      />
 
       <section className="bg-slate-50">
         <div className="mx-auto max-w-6xl px-6 py-16">
@@ -869,44 +865,25 @@ export default function Web3AppDevelopmentPage() {
         </div>
       </section>
 
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-6xl px-6 py-16">
-          <div className="max-w-3xl">
-            <h2 className="text-3xl font-semibold md:text-4xl">
-              FAQs Related to Web3 Mobile App Development
-            </h2>
-            <p className="mt-3 text-slate-600">
-              Answering the most commonly asked questions about web3 mobile app
-              development.
-            </p>
-          </div>
-          <div className="mt-8 space-y-4">
-            {faqs.map((faq, index) => (
-              <div
-                key={faq.question}
-                className="rounded-2xl border border-slate-200 bg-white p-5"
-              >
-                <button
-                  onClick={() =>
-                    setOpenFaq((prev) => (prev === index ? null : index))
-                  }
-                  className="flex w-full items-center justify-between text-left"
-                >
-                  <span className="text-base font-semibold">
-                    {faq.question}
-                  </span>
-                  <span className="text-xl text-slate-400">
-                    {openFaq === index ? '-' : '+'}
-                  </span>
-                </button>
-                {openFaq === index && (
-                  <p className="mt-3 text-sm text-slate-600">{faq.answer}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSectionCardItems
+        items={faqs}
+        openIndex={openFaq}
+        onToggle={toggleFaq}
+        sectionClassName="bg-slate-50"
+        containerClassName="mx-auto max-w-6xl px-6 py-16"
+        headerWrapperClassName="max-w-3xl"
+        title="FAQs Related to Web3 Mobile App Development"
+        titleTag="h2"
+        titleClassName="text-3xl font-semibold md:text-4xl"
+        subtitle="Answering the most commonly asked questions about web3 mobile app development."
+        subtitleClassName="mt-3 text-slate-600"
+        listClassName="mt-8 space-y-4"
+        itemClassName="rounded-2xl border border-slate-200 bg-white p-5"
+        buttonClassName="flex w-full items-center justify-between text-left"
+        questionClassName="text-base font-semibold"
+        iconClassName="text-xl text-slate-400"
+        answerClassName="mt-3 text-sm text-slate-600"
+      />
     </div>
   )
 }

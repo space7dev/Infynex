@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import EliteCustomers from '@/components/EliteCustomers';
-import VideoModalTrigger from '@/components/about-us/VideoModalTrigger';
+import EliteCustomers from './components/EliteCustomers'
+import VideoModalTrigger from './components/VideoModalTrigger'
 
 export const metadata: Metadata = {
   title: 'About Us - Infynex Solutions',

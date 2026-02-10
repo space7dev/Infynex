@@ -9,78 +9,96 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setError('')
-    setLoading(true)
+    setIsSubmitting(true)
 
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
 
-    setLoading(false)
+      if (!response.ok) {
+        const payload = await response.json().catch(() => null)
+        throw new Error(payload?.error || 'Unable to sign in.')
+      }
 
-    if (response.ok) {
       router.push('/admin/emails')
-      return
+      router.refresh()
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Unable to sign in.'
+      setError(message)
+    } finally {
+      setIsSubmitting(false)
     }
-
-    const data = await response.json().catch(() => ({}))
-    setError(data.detail || 'Unable to sign in.')
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 px-6 py-12 text-slate-900">
+    <main className="min-h-screen bg-slate-50 px-6 py-12 text-slate-900">
       <div className="mx-auto w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-        <h1 className="text-2xl font-semibold">Sign in</h1>
-        <p className="mt-2 text-sm text-slate-600">Welcome back to Infynex admin.</p>
+        <h1 className="text-2xl font-semibold">Admin login</h1>
+        <p className="mt-2 text-sm text-slate-600">
+          Sign in to access the email management dashboard.
+        </p>
 
-        <form onSubmit={onSubmit} className="mt-6 space-y-4">
-          <div>
-            <label className="text-sm font-medium text-slate-700">Email</label>
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+          <label className="block text-sm font-medium text-slate-700">
+            Email
             <input
+              className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-400"
+              autoComplete="email"
+              name="email"
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="you@company.com"
+              required
               type="email"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm"
-              required
             />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-slate-700">Password</label>
+          </label>
+
+          <label className="block text-sm font-medium text-slate-700">
+            Password
             <input
+              className="mt-2 w-full rounded-xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-slate-400"
+              autoComplete="current-password"
+              name="password"
+              onChange={(event) => setPassword(event.target.value)}
+              placeholder="Enter your password"
+              required
               type="password"
               value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="mt-2 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm"
-              required
             />
-          </div>
+          </label>
 
-          {error ? <p className="text-sm text-red-600">{error}</p> : null}
+          {error && (
+            <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+              {error}
+            </div>
+          )}
 
           <button
+            className="w-full rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={isSubmitting}
             type="submit"
-            className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white"
-            disabled={loading}
           >
-            {loading ? 'Signing in...' : 'Sign in'}
+            {isSubmitting ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
 
         <div className="mt-6 flex items-center justify-between text-sm text-slate-600">
-          <Link href="/auth/forgot-password" className="text-blue-600">
+          <Link className="hover:text-slate-900" href="/auth/forgot-password">
             Forgot password?
           </Link>
-          <Link href="/auth/register" className="text-blue-600">
+          <Link className="hover:text-slate-900" href="/auth/register">
             Create account
           </Link>
         </div>
       </div>
-    </div>
+    </main>
   )
 }

@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
-import Hero from '@/components/Hero'
-import ServiceCard from '@/components/ServiceCard'
+import Hero from './components/Hero'
+import ServiceCard from './components/ServiceCard'
 import { Blocks, Lock, Coins, FileCode, Wallet, Network } from 'lucide-react'
 
 export const metadata: Metadata = {

@@ -1,6 +1,9 @@
 'use client'
 
 import { useState } from 'react'
+import { useAccordion } from '@/lib/useAccordion'
+import FaqSectionButtonItems from '@/components/shared/FaqSectionButtonItems'
+import TrustedLogosStrip from '@/components/shared/TrustedLogosStrip'
 
 const normalizeAssetUrl = (url: string) =>
   url.replace('https://www.Infynex.com/', 'https://www.suffescom.com/')
@@ -384,7 +387,7 @@ const faqs = [
 ]
 
 export default function BlockchainEcommercePlatformPage() {
-  const [openFaq, setOpenFaq] = useState<number | null>(0)
+  const { openIndex: openFaq, toggleIndex: toggleFaq } = useAccordion(0)
 
   return (
     <div className="bg-white text-slate-900">
@@ -416,21 +419,16 @@ export default function BlockchainEcommercePlatformPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-100 bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-8">
-          <div className="flex flex-wrap items-center justify-center gap-6">
-            {trustedLogos.map((logo) => (
-              <img
-                key={logo.alt}
-                src={normalizeAssetUrl(logo.src)}
-                alt={logo.alt}
-                className="h-10 w-auto opacity-80"
-                loading="lazy"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <TrustedLogosStrip
+        logos={trustedLogos.map((logo) => ({
+          ...logo,
+          src: normalizeAssetUrl(logo.src),
+        }))}
+        sectionClassName="border-b border-slate-100 bg-white"
+        containerClassName="mx-auto max-w-6xl px-6 py-8"
+        listClassName="flex flex-wrap items-center justify-center gap-6"
+        imageClassName="h-10 w-auto opacity-80"
+      />
 
       <section className="bg-white">
         <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 md:grid-cols-2 md:items-center">
@@ -765,39 +763,25 @@ export default function BlockchainEcommercePlatformPage() {
         </div>
       </section>
 
-      <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-6 py-14">
-          <div className="max-w-3xl">
-            <h4 className="text-2xl font-semibold md:text-4xl">
-              Frequently Asked Questions
-            </h4>
-            <p className="mt-4 text-slate-600">
-              Top-rated blockchain ecommerce questions answered.
-            </p>
-          </div>
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {faqs.map((faq, index) => (
-              <button
-                key={faq.question}
-                onClick={() => setOpenFaq((prev) => (prev === index ? null : index))}
-                className="rounded-2xl border border-slate-100 p-5 text-left"
-              >
-                <div className="flex items-center justify-between gap-4">
-                  <h3 className="text-sm font-semibold text-slate-800">
-                    {faq.question}
-                  </h3>
-                  <span className="text-lg text-emerald-500">
-                    {openFaq === index ? '-' : '+'}
-                  </span>
-                </div>
-                {openFaq === index ? (
-                  <p className="mt-3 text-sm text-slate-600">{faq.answer}</p>
-                ) : null}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSectionButtonItems
+        items={faqs}
+        openIndex={openFaq}
+        onToggle={toggleFaq}
+        sectionClassName="bg-white"
+        containerClassName="mx-auto max-w-6xl px-6 py-14"
+        headerWrapperClassName="max-w-3xl"
+        title="Frequently Asked Questions"
+        titleTag="h4"
+        titleClassName="text-2xl font-semibold md:text-4xl"
+        subtitle="Top-rated blockchain ecommerce questions answered."
+        subtitleClassName="mt-4 text-slate-600"
+        listClassName="mt-10 grid gap-6 md:grid-cols-2"
+        itemButtonClassName="rounded-2xl border border-slate-100 p-5 text-left"
+        headerClassName="flex items-center justify-between gap-4"
+        questionClassName="text-sm font-semibold text-slate-800"
+        iconClassName="text-lg text-emerald-500"
+        answerClassName="mt-3 text-sm text-slate-600"
+      />
     </div>
   )
 }

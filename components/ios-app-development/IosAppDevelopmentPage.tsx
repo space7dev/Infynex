@@ -1,6 +1,8 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
+import { useAccordion } from '@/lib/useAccordion'
+import FaqSectionCardItems from '@/components/shared/FaqSectionCardItems'
 
 const normalizeAssetUrl = (url: string) => url.replace(/Infynex/g, 'suffescom')
 
@@ -287,7 +289,7 @@ const sectionHeading = (title: string, subtitle?: string) => (
 )
 
 export default function IosAppDevelopmentPage() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0)
+  const { openIndex, toggleIndex } = useAccordion(0)
 
   const formattedHeroTitle = useMemo(
     () =>
@@ -479,42 +481,21 @@ export default function IosAppDevelopmentPage() {
 
 
 
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          {sectionHeading('FAQs')}
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            {faqItems.map((item, index) => {
-              const isOpen = openIndex === index
-              return (
-                <div
-                  key={item.question}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
-                >
-                  <button
-                    type="button"
-                    className="flex w-full items-center justify-between text-left"
-                    onClick={() =>
-                      setOpenIndex((prev) => (prev === index ? null : index))
-                    }
-                  >
-                    <span className="text-base font-semibold text-slate-900">
-                      {item.question}
-                    </span>
-                    <span className="ml-4 text-xl text-emerald-500">
-                      {isOpen ? '-' : '+'}
-                    </span>
-                  </button>
-                  {isOpen ? (
-                    <p className="mt-3 text-sm text-slate-600">
-                      {item.answer}
-                    </p>
-                  ) : null}
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
+      <FaqSectionCardItems
+        items={faqItems}
+        openIndex={openIndex}
+        onToggle={toggleIndex}
+        sectionClassName="bg-slate-50"
+        containerClassName="mx-auto max-w-6xl px-4 py-16"
+        header={sectionHeading('FAQs')}
+        listClassName="mt-8 grid gap-4 md:grid-cols-2"
+        itemClassName="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+        buttonClassName="flex w-full items-center justify-between text-left"
+        questionClassName="text-base font-semibold text-slate-900"
+        iconClassName="ml-4 text-xl text-emerald-500"
+        answerClassName="mt-3 text-sm text-slate-600"
+        buttonType="button"
+      />
 
       <section className="bg-white">
         <div className="mx-auto max-w-6xl px-4 py-16">
