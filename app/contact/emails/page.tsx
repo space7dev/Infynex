@@ -1,0 +1,14 @@
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { AUTH_COOKIE, verifyAuthToken } from '@/lib/auth'
+
+export default function ContactEmailsPage() {
+  const token = cookies().get(AUTH_COOKIE)?.value
+  const user = token ? verifyAuthToken(token) : null
+
+  if (!user) {
+    redirect('/auth/login')
+  }
+
+  redirect('/admin/emails')
+}
