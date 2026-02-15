@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import { siteConfig } from '@/lib/config'
+import { organizationSchema, websiteSchema, professionalServiceSchema } from '@/lib/structured-data'
 import '@/styles/globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
@@ -10,17 +11,22 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} - Innovative Technology Solutions`,
-    template: `%s | ${siteConfig.name}`,
+    default: `Infynex - Technology Solutions Provider`,
+    template: `%s | Infynex`,
   },
   description: siteConfig.description,
   keywords: [
+    'Infynex',
+    'Infynex Solutions',
     'mobile app development',
     'blockchain development',
     'AI solutions',
+    'AI development',
     'custom software development',
+    'web3 development',
     'hire developers',
     'technology consulting',
+    'app development company',
   ],
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
@@ -65,30 +71,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: siteConfig.name,
-    url: siteConfig.url,
-    description: siteConfig.description,
-    email: siteConfig.email,
-    telephone: siteConfig.phone,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: siteConfig.address,
-    },
-    sameAs: Object.values(siteConfig.social),
-  }
-
   return (
     <html lang="en" className={inter.variable}>
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
       </head>
       <body className="flex min-h-screen flex-col">
+        {/* Enhanced Structured Data for Better SEO */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceSchema) }}
         />
         <Navbar />
         <main className="flex-1" style={{paddingTop:'7rem'}}>{children}</main>

@@ -1,10 +1,11 @@
 export const siteConfig = {
-  name: 'Infynex Solutions',
+  name: 'Infynex',
+  fullName: 'Infynex Solutions',
   description:
-    'Leading technology solutions provider specializing in Mobile Apps, Blockchain, AI, and Custom Software Development.',
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://infynex.com',
+    'Infynex is a leading technology solutions provider specializing in Mobile App Development, Blockchain, AI, and Custom Software Development. Transform your business with our expert developers.',
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://infynex.agency',
   phone: '+1 (234) 206-0062',
-  email: 'contact@infynex.com',
+  email: 'contact@infynex.agency',
   address: '123 Tech Street, Silicon Valley, CA 94025',
   social: {
     twitter: 'https://twitter.com/infynex',

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useAccordion } from '@/lib/useAccordion'
 import FaqSectionButtonItems from './FaqSectionButtonItems'
 import TrustedLogosStrip from './TrustedLogosStrip'
@@ -397,14 +398,17 @@ export default function BlockchainEcommercePlatformPage() {
             <h1 className="text-3xl font-semibold leading-tight md:text-5xl">
               Blockchain Ecommerce Marketplace Solutions
             </h1>
-            <p className="mt-4 text-base text-slate-200 md:text-lg">
+            <p className="mt-4 text-base text-slate-200 md:text-lg pb-[30px]">
               Build a decentralized ecommerce platform with advanced traceability,
               security, and transparency. Our blockchain ecommerce solutions help
               you create trusted marketplaces with enterprise-grade control.
             </p>
-            <button className="mt-8 rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-900">
+            <Link
+              href="/contact"
+              className="mt-8 rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-900"
+            >
               Contact Our Experts
-            </button>
+            </Link>
           </div>
           <div className="rounded-3xl border border-white/10 bg-white/5 p-4">
             <img

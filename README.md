@@ -1,6 +1,16 @@
-# Infynex Solutions - Company Website
+# Infynex - Technology Solutions Company Website
 
 A production-ready company website built with Next.js 14 (App Router), TypeScript, and Tailwind CSS. This modern, responsive website showcases technology services including mobile app development, blockchain solutions, AI/ML, and custom software development.
+
+## 🎯 Quick Start for Google Indexing
+
+**Want to appear in Google search results for "Infynex"?**
+
+1. **Deploy your site** to production (Vercel, Netlify, etc.)
+2. **Follow the checklist**: See [GOOGLE_INDEXING_CHECKLIST.md](GOOGLE_INDEXING_CHECKLIST.md)
+3. **Read the full guide**: See [SEO_GUIDE.md](SEO_GUIDE.md)
+
+Your site is already SEO-optimized and ready to be indexed by Google!
 
 ## 🚀 Features
 
@@ -8,7 +18,7 @@ A production-ready company website built with Next.js 14 (App Router), TypeScrip
 - **TypeScript** - Type-safe code throughout
 - **Tailwind CSS** - Utility-first styling with custom design system
 - **Fully Responsive** - Mobile-first design that works on all devices
-- **SEO Optimized** - Meta tags, OpenGraph, sitemap, and robots.txt
+- **SEO Optimized** - Meta tags, OpenGraph, sitemap, and robots.txt configured
 - **Performance Optimized** - Image optimization, lazy loading, code splitting
 - **Accessibility** - ARIA labels, keyboard navigation, semantic HTML
 - **Contact Forms** - React Hook Form with Zod validation
@@ -106,7 +116,7 @@ Create a `.env.local` file in the root directory:
 ```env
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NEXT_PUBLIC_SITE_NAME=Infynex Solutions
-NEXT_PUBLIC_CONTACT_EMAIL=contact@infynex.com
+NEXT_PUBLIC_CONTACT_EMAIL=contact@infynex.agency
 ```
 
 ### 3. Run Development Server
@@ -293,7 +303,7 @@ This project is created for demonstration purposes.
 
 For issues or questions:
 - Open an issue on GitHub
-- Contact: contact@infynex.com
+- Contact: contact@infynex.agency
 
 ---
 

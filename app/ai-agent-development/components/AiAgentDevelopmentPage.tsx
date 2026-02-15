@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import Link from 'next/link'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { useAccordion } from '@/lib/useAccordion'
@@ -1573,7 +1574,7 @@ export default function AiAgentDevelopmentPage() {
               Crew AI. Our experts deliver autonomous systems that transform how
               businesses operate, with measurable efficiency and ROI.
             </p>
-            <ul className="mt-6 grid gap-3 text-sm text-slate-200 sm:grid-cols-2">
+            <ul className="mt-6 grid gap-3 text-sm text-slate-200 sm:grid-cols-2 pb-[30px]">
               {heroStats.map((stat) => (
                 <li
                   key={stat}
@@ -1583,9 +1584,12 @@ export default function AiAgentDevelopmentPage() {
                 </li>
               ))}
             </ul>
-            <button className="mt-8 rounded-full bg-sky-400 px-6 py-3 text-sm font-semibold text-slate-950">
+            <Link
+              href="/contact"
+              className="mt-8 rounded-full bg-sky-400 px-6 py-3 text-sm font-semibold text-slate-950"
+            >
               Talk To Our Experts
-            </button>
+            </Link>
           </div>
           <div className="relative">
             <div className="absolute -right-8 top-10 h-24 w-24 rounded-full bg-sky-400/20 blur-2xl" />

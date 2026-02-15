@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { navItems } from '@/lib/config'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://infynex.com'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://infynex.agency'
 
   const routes = new Set<string>([
     '',

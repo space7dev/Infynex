@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useAccordion } from '@/lib/useAccordion'
 import FaqSectionCardItems from './FaqSectionCardItems'
 import TrustedLogosCardGrid from './TrustedLogosCardGrid'
@@ -469,14 +470,17 @@ export default function Web3AppDevelopmentPage() {
             <h1 className="mt-3 text-3xl font-semibold leading-tight md:text-5xl">
               Web3 App Development Company
             </h1>
-            <p className="mt-4 text-base text-slate-200 md:text-lg">
+            <p className="mt-4 text-base text-slate-200 md:text-lg pb-[30px]">
               Experience the benefits of web3 technology for your business with
               advanced applications built for Android and iOS. Our experts
               deliver secure, scalable, and business-ready web3 solutions.
             </p>
-            <button className="mt-8 rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-slate-900">
-              Join The Paradigm Shift
-            </button>
+            <Link
+              href="/contact"
+              className="mt-8 rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-slate-900"
+            >
+              Talk to Our Experts
+            </Link>
           </div>
           <div className="flex justify-center">
             <img

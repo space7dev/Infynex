@@ -565,9 +565,7 @@ export default function WearableAppPage() {
                 </li>
               ))}
             </ul>
-            <button className="mt-8 rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-900">
-              Join The Paradigm Shift
-            </button>
+            
           </div>
           <div className="rounded-3xl bg-white/10 p-6">
             <h2 className="text-xl font-semibold">Talk to our experts</h2>

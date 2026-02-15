@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useAccordion } from '@/lib/useAccordion'
 import FaqSectionCardItems from './FaqSectionCardItems'
 import TrustedLogosCardGrid from './TrustedLogosCardGrid'
@@ -418,14 +419,17 @@ export default function DefiSmartContractDevelopmentPage() {
             <h1 className="text-3xl font-semibold leading-tight md:text-5xl">
               DeFi Smart Contract Development Company
             </h1>
-            <p className="mt-4 text-base text-slate-200 md:text-lg">
+            <p className="mt-4 text-base text-slate-200 md:text-lg pb-[30px]">
               Build faster, transparent, and secure DeFi smart contracts for
               lending, borrowing, insurance, tokenization, crypto exchanges, and
               asset trading platforms with 100% code customization.
             </p>
-            <button className="mt-8 rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-900">
-              Join The Paradigm Shift
-            </button>
+            <Link
+              href="/contact"
+              className="mt-8 rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-900"
+            >
+              Talk to Our Experts
+            </Link>
           </div>
           <div className="flex justify-center">
             <img

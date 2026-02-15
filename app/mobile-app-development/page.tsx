@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { Space_Grotesk, Manrope } from 'next/font/google'
 import IndustryVideoTabs from './components/IndustryVideoTabs'
 import TechStackTabs from './components/TechStackTabs'
@@ -696,12 +697,18 @@ export default function MobileAppDevelopmentPage() {
               dependable mobile experiences that bring your vision to life.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <button className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:-translate-y-0.5">
+              <Link
+                href="/portfolio"
+                className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:-translate-y-0.5"
+              >
                 Talk to our experts
-              </button>
-              <button className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+              </Link>
+              <Link
+                href="/portfolio"
+                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+              >
                 View portfolio
-              </button>
+              </Link>
             </div>
             <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
               {heroAwards.map((award) => (
@@ -747,9 +754,6 @@ export default function MobileAppDevelopmentPage() {
               and bringing them to life. As a leading mobile application development company, we
               transform business needs into cutting-edge solutions with proven partner support.
             </p>
-            <button className="mt-6 rounded-full bg-primary-600 px-6 py-3 text-sm font-semibold text-white">
-              Join The Paradigm Shift
-            </button>
           </div>
         </div>
       </section>

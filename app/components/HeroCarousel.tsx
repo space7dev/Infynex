@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
-import { Link } from 'lucide-react'
+import Link from 'next/link'
 
 const slides = [
   {
@@ -207,12 +207,12 @@ export default function HeroCarousel() {
                       ))}
                     </div>
 
-                    <button
-                      type="button"
-                      className="mt-6 px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl"
+                    <Link
+                      href="/contact"
+                      className="mt-6 inline-flex px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl"
                     >
                       Talk To Experts Now
-                    </button>
+                    </Link>
                   </div>
 
                   {/* Image/Visual */}

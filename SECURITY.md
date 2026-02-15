@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability, please email us at security@infynex.com instead of using the issue tracker.
+If you discover a security vulnerability, please email us at security@infynex.agency instead of using the issue tracker.
 
 Please include:
 

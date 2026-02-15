@@ -36,7 +36,7 @@ Add these in Vercel dashboard:
 ```
 NEXT_PUBLIC_SITE_URL=https://yourdomain.com
 NEXT_PUBLIC_SITE_NAME=Infynex Solutions
-NEXT_PUBLIC_CONTACT_EMAIL=contact@infynex.com
+NEXT_PUBLIC_CONTACT_EMAIL=contact@infynex.agency
 ```
 
 ## Netlify

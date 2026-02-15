@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import Link from 'next/link'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { useAccordion } from '@/lib/useAccordion'
@@ -763,13 +764,16 @@ export default function AndroidAppDevelopmentPage() {
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
             <div className="space-y-6">
               <h1 className="text-4xl md:text-5xl font-bold">Android App Development Company</h1>
-              <p className="text-lg text-emerald-100">
+              <p className="text-lg text-emerald-100 pb-[30px]">
                 As a trusted Android app development company, we build user-friendly apps that
                 deliver remarkable performance across devices.
               </p>
-              <button className="rounded-lg bg-emerald-500 px-6 py-3 font-semibold text-white hover:bg-emerald-600">
+              <Link
+                href="/contact"
+                className="rounded-lg bg-emerald-500 px-6 py-3 font-semibold text-white hover:bg-emerald-600"
+              >
                 Get a free Proposal
-              </button>
+              </Link>
             </div>
             <div className="flex justify-center">
               <img

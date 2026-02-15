@@ -325,7 +325,7 @@ export default function IosAppDevelopmentPage() {
                 View Our Portfolio
               </a>
               <a
-                href="/contact-us"
+                href="/contact"
                 className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:border-white"
               >
                 Contact Us

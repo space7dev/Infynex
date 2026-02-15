@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import Link from 'next/link'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { useAccordion } from '@/lib/useAccordion'
@@ -967,12 +968,12 @@ export default function AiChatbotDevelopmentPage() {
               ))}
             </ul>
             <div className="mt-8 flex flex-wrap gap-4">
-              <button className="rounded-full bg-emerald-400 px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-emerald-300">
-                I want Chatbot Demo
-              </button>
-              <button className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:border-white">
+              <Link
+                href="/contact"
+                className="rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:border-white"
+              >
                 Talk to Experts
-              </button>
+              </Link>
             </div>
           </div>
           <div className="md:w-1/2">
